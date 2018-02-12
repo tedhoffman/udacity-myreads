@@ -1,13 +1,13 @@
 # Ted Hoffman's Udacity MyReads Project
-## Version 0.11
-### [https://github.com/tedhoffman/udacity-myreads](https://github.com/tedhoffman/udacity-myreads) /
+## Version 0.12
+### [https://github.com/tedhoffman/udacity-myreads](https://github.com/tedhoffman/udacity-myreads)
 
-Installation Instructions:
+**Installation Instructions:**
 
 * Install all project dependencies with `npm install`
 * Start the development server with `npm start`
 
-Using the Application:
+**Using the Application:**
 
 * The application displays three categories of books: *Currently Reading*, *Read*, and *Want To Read*
 * Use the dropdown where the *down arrow* icon is displayed in the lower right corner of each book to move books between shelves or remove them entirely
