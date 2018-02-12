@@ -22,5 +22,6 @@
 * Added CHANGELOG section in [README.md](README.md)
 * Added `DebounceInput` to [src/App.js](src/App.js)
 * Added `DebounceInput` dependency information to [package.json](package.json)
+
 *v0.12 - 02/12/18*
 * Submitted project to Udacity
