@@ -1,13 +1,18 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import ListBooks from './ListBooks'
+import SearchResults from './Search'
 import './App.css'
 import {Route} from 'react-router-dom'
 import {Link} from 'react-router-dom'
 
 class BooksApp extends React.Component {
 	state = {
-		books: []
+		books: [],
+		query: [],
+		searchTerm: "",
+		gotResults: false,
+		hideResults: "none"
 	}
 
 	shelves = {
@@ -18,6 +23,23 @@ class BooksApp extends React.Component {
 
 	componentDidMount() {
 		this.fetchBooks()
+	}
+
+	searchQuery = (searchTerm) => {
+		this.setState({searchTerm})
+
+		if (searchTerm.length > 0 && searchTerm.length !== undefined) {
+			BooksAPI.search(searchTerm, 20).then((query) =>
+				query.length > 0 && query.length !== undefined ? (
+					this.setState({query}),
+					this.setState({gotResults: true}),
+					this.setState({hideResults: "flex"})
+				) : (
+					this.setState({gotResults: false}),
+					this.setState({hideResults: "none"})
+				)
+			)
+		}
 	}
 
 	fetchBooks = () => {
@@ -33,7 +55,6 @@ class BooksApp extends React.Component {
 	}
 
 	render() {
-		{/* BooksAPI.getAll().then((response) => console.log(response)) */}
 		return (
 				<div className="app">
 					<div className="list-books">
@@ -46,15 +67,34 @@ class BooksApp extends React.Component {
 						<div className="search-books-bar">
 							<a className="close-search" href="/">Close</a>
 							<div className="search-books-input-wrapper">
-								{/*
-									NOTES: The search from BooksAPI is limited to a particular set of search terms. https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-								*/
-								}
-								<input type="text" placeholder="Search by title or author"/>
-							</div>
+								<input
+									type="text"
+									placeholder="Search by title or author"
+									onChange={event => this.searchQuery(event.target.value)}
+								/>
+						</div>
 						</div>
 						<div className="search-books-results">
-							<ol className="books-grid"></ol>
+							<h2 className="search-header">{this.state.gotResults === true ? (
+								`Search Results (${this.state.query.length})`
+							) : (
+								`No Results Found`
+							)}
+							</h2>
+							<ol className="books-grid" style={{
+									display: this.state.hideResults
+								}}>
+							{
+								this.state.query.map((result, i)=> (
+									<li key={i}>
+									<SearchResults
+										book={result}
+										onBookChange={this.changeShelf}
+									/>
+									</li>
+								))
+							}
+							</ol>
 						</div>
 					</div>
 				)}/>
@@ -77,11 +117,8 @@ class BooksApp extends React.Component {
 
 
 				<div className="open-search">
-				<Route exact path='/' render={() => (
+				<Route path='/' render={() => (
 						<a href="/search">Add a book</a>
-				)}/>
-				<Route exact path='/search' render={() => (
-						<a href="/">Add a book</a>
 				)}/>
 				</div>
 
