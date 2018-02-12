@@ -5,6 +5,7 @@ import SearchResults from './Search'
 import './App.css'
 import {Route} from 'react-router-dom'
 import {Link} from 'react-router-dom'
+import {DebounceInput} from 'react-debounce-input';
 
 class BooksApp extends React.Component {
 	state = {
@@ -67,7 +68,8 @@ class BooksApp extends React.Component {
 						<div className="search-books-bar">
 							<a className="close-search" href="/">Close</a>
 							<div className="search-books-input-wrapper">
-								<input
+								<DebounceInput
+									debounceTimeout={300}
 									type="text"
 									placeholder="Search by title or author"
 									onChange={event => this.searchQuery(event.target.value)}
