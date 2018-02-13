@@ -1,5 +1,5 @@
 # Ted Hoffman's Udacity MyReads Project
-## Version 0.13
+## Version 0.14
 ### [https://github.com/tedhoffman/udacity-myreads](https://github.com/tedhoffman/udacity-myreads)
 
 **Installation Instructions:**
@@ -17,6 +17,11 @@
   of the three bookshelves in the application
 
 **CHANGELOG**
+
+*v0.14 - 02/13/18*
+
+* Fixed search functionality to recognize whether a book is already on a shelf
+* Fixed author name display, separated them with commas
 
 *v0.13 - 02/12/18*
 * Added CHANGELOG section in [README.md](README.md)
