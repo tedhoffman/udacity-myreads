@@ -1,19 +1,22 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
-let coverUrl
+let coverUrl, curShelf, match
 
 class SearchResults extends Component {
 	static propTypes = {
+		books: PropTypes.array.isRequired,
 		book: PropTypes.object.isRequired,
 		onBookChange: PropTypes.func
 	}
 
 	render() {
-		const {book, onBookChange} = this.props
+		const {books, book, onBookChange} = this.props
 
-		this.props.book.imageLinks !== undefined ? coverUrl = this.props.book.imageLinks.thumbnail : coverUrl = "img/unavailable.png"
+		match = books.filter(b => b.title === book.title)
+		match.length > 0 ? curShelf = match[0].shelf : curShelf = "none"
 
+		book.imageLinks !== undefined ? coverUrl = book.imageLinks.thumbnail : coverUrl = "img/unavailable.png"
 		return (
 			<div className="book">
 				<div className="book-top">
@@ -24,7 +27,7 @@ class SearchResults extends Component {
 						}}>
 					</div>
 					<div className="book-shelf-changer">
-						<select onChange={(event) => onBookChange(book.id, event.target.value)} value="mt">
+						<select onChange={(event) => onBookChange(book.id, event.target.value)} value={curShelf}>
 							<option value="mt" disabled="disabled">Move to...</option>
 							<option value="currentlyReading">Currently Reading</option>
 							<option value="wantToRead">Want to Read</option>
@@ -33,8 +36,8 @@ class SearchResults extends Component {
 						</select>
 					</div>
 				</div>
-				<div className="book-title">{book.title}</div>
-				<div className="book-authors">{book.author}</div>
+				<div className="book-title"><a href={book.infoLink} target="_blank">{book.title} {book.shelf}</a></div>
+				<div className="book-authors">{Array.isArray(book.authors) ? book.authors.join(', ') : ''}</div>
 			</div>
 			)
 	}

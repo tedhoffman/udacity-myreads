@@ -4,7 +4,6 @@ import ListBooks from './ListBooks'
 import SearchResults from './Search'
 import './App.css'
 import {Route} from 'react-router-dom'
-import {Link} from 'react-router-dom'
 import {DebounceInput} from 'react-debounce-input';
 
 class BooksApp extends React.Component {
@@ -69,7 +68,7 @@ class BooksApp extends React.Component {
 							<a className="close-search" href="/">Close</a>
 							<div className="search-books-input-wrapper">
 								<DebounceInput
-									debounceTimeout={300}
+									debounceTimeout={400}
 									type="text"
 									placeholder="Search by title or author"
 									onChange={event => this.searchQuery(event.target.value)}
@@ -89,10 +88,11 @@ class BooksApp extends React.Component {
 							{
 								this.state.query.map((result, i)=> (
 									<li key={i}>
-									<SearchResults
-										book={result}
-										onBookChange={this.changeShelf}
-									/>
+										<SearchResults
+											books={this.state.books}
+											book={result}
+											onBookChange={this.changeShelf}
+										/>
 									</li>
 								))
 							}
